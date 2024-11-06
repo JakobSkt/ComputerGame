@@ -1,6 +1,6 @@
 /**
  * Models a position
- * A position consists of the left city, the destination city, distance left and total distance between the two cities
+ * Positions consists of a starting city, a destination city, distance left and total distance between the two cities
  * @author Jakob Skøt Nielsen 202407223
  * @author Daniel Dupont 202407440
  * @version 06-11-2024

@@ -2,7 +2,7 @@ import java.util.*;
 
 /**
  * Models a country
- * A country consists of a name and a road network between cities
+ * Countries consists of a name and a road network between cities
  * @author Jakob Skøt Nielsen 202407223
  * @author Daniel Dupont 202407440
  * @version 06-11-2024
@@ -16,7 +16,7 @@ public class Country {
 
     /**
     * Creates a Country 
-    * @param name   Country name
+    * @param name Country name
      */
     public Country(String name) {
         this.name = name;
@@ -37,7 +37,7 @@ public class Country {
 
     /**
     * Sets the game field
-    * @param game   Game reference to set field to
+    * @param game Game reference to set field to
      */
     public void setGame(Game game) { this.game = game; }
 
@@ -51,20 +51,25 @@ public class Country {
 
     /**
     * Adds road between two cities
+     * @param a The city to start the road in
+     * @param b The city to end the road in
+     * @param length The length of the road
      */
     public void addRoads(City a, City b, int length) {
         if(length > 0 && !a.equals(b)) {
             if(network.containsKey(a)) {
                 network.get(a).add(new Road(a, b, length));
             }
+            // If both cities are in the same country, add the return road
             if (network.containsKey(b)) {
                 network.get(b).add(new Road(b, a, length));
             }
         }
     }
     /**
-    * Returns the position of the city
-    * @param city   City to get the position for
+    * Returns the position of the city with a length of 0
+    * @param city City to get the position for
+     * @return Position The position of the player in the given city
      */
     public Position position(City city) {
         return new Position(city, city, 0);
@@ -72,8 +77,9 @@ public class Country {
 
     /**
     * Returns position object with travel info to next town
-    * @param from   City to travel from
-    * @param to     City to travel to
+    * @param from City to travel from
+    * @param to City to travel to
+     * @return Position object
      */
     public Position readyToTravel(City from, City to) {
         Road travelRoad = null;
@@ -105,7 +111,7 @@ public class Country {
 
     /**
     * Searches network for certain city
-    * @param name   City name to find
+    * @param name City name to find
     * @return city if found else null
      */
     public City getCity(String name) {
@@ -119,7 +125,7 @@ public class Country {
 
     /**
     * Returns road network of certain city
-    * @param c   City's road network to get
+    * @param c City's road network to get
     * @return Set of roads if found else empty TreeMap
     */
     public Set<Road> getRoads(City c) {
@@ -141,7 +147,7 @@ public class Country {
     /**
      * Calculates random bonus in range from 0 to value
      * @param value Int value of city
-     * @return      Int the calculated bonus
+     * @return The calculated bonus
      */
     public int bonus(int value) {
         if(value > 0) {
@@ -171,7 +177,7 @@ public class Country {
 
     /**
      * Check if Object is equal to this based on name field
-     * @param obj    Object to check if equal to
+     * @param obj Object to check if equal to
      * @return true if objects are equal
      */
     @Override

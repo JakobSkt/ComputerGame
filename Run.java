@@ -52,7 +52,7 @@ public class Run {
         System.out.println(roads);
         */
 
-        //TestServer.test("CG1");
-        GUI.createGameBoard();
+        TestServer.test("CG1");
+        //GUI.createGameBoard();
     }
 }
