@@ -1,4 +1,4 @@
-/*
+/**
 * Models a city
  * Cities contain a name and a value and can be visited by the player
  * @author Jakob Skøt Nielsen 202407223
@@ -15,7 +15,7 @@ public class City implements Comparable<City> {
     private int initialValue; // Initial value of the city
     private Country country; // The country the city is in
 
-    /*
+    /**
     * Creates a new city
     * @param name   The name of the city
     * @param value  The initial value of the city
@@ -27,31 +27,31 @@ public class City implements Comparable<City> {
         this.initialValue = value;
         this.country = country;
     }
-    /*
+    /**
     * Returns the city name
     * @return city name
      */
     public String getName() { return name; }
 
-    /*
+    /**
      * Returns the city value
      * @return city value
      */
     public int getValue() { return value; }
 
-    /*
+    /**
      * Returns the city's initial value
      * @return city's initial value
      */
     public int getInitialValue() { return initialValue; }
 
-    /*
+    /**
     * Returns the country the city is placed in
     * @return country the city is placed in
      */
     public Country getCountry() { return country; }
 
-    /*
+    /**
      * Add amount to the city value
      * @param amount    Amount to add
      */
@@ -59,7 +59,7 @@ public class City implements Comparable<City> {
         value += amount;
     }
 
-    /*
+    /**
     * Get bonus and withdraw from city value
     * @return withdrew bonus
      */
@@ -69,14 +69,14 @@ public class City implements Comparable<City> {
         return bonus;
     }
 
-    /*
+    /**
     * Reset city's value to initial value
      */
     public void reset() {
         value = initialValue;
     }
 
-    /*
+    /**
     * Returns the city's fields in String form
     * @return name followed by the value in parentheses
      */
@@ -85,7 +85,7 @@ public class City implements Comparable<City> {
         return name + " (" + value + ")";
     }
 
-    /*
+    /**
     * Compares cities based on name, alphabetically
     * @param other  Other city object to compare to
     * @return int based on comparing name field
@@ -95,7 +95,7 @@ public class City implements Comparable<City> {
         return name.compareTo(other.name);
     }
 
-    /*
+    /**
     * Generate hash code based on name field, country field and prime numbers
     * @return generated int hash code
      */
@@ -105,7 +105,7 @@ public class City implements Comparable<City> {
                 country.hashCode() * 13;
     }
 
-    /*
+    /**
     * Check if Object is equal to this based on name and country fields
     * @param obj    Object to check if equal to
     * @return true if objects are equal

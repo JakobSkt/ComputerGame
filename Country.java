@@ -1,6 +1,6 @@
 import java.util.*;
 
-/*
+/**
  * Models a country
  * A country consists of a name and a road network between cities
  * @author Jakob Skøt Nielsen 202407223
@@ -14,7 +14,7 @@ public class Country {
     private Map<City, Set<Road>> network; // HashMap with cities as keys and a set of roads that start in that city as values
     private Game game; // Game reference
 
-    /*
+    /**
     * Creates a Country 
     * @param name   Country name
      */
@@ -23,25 +23,25 @@ public class Country {
         network = new TreeMap<>(); // Initiate empty TreeMap
     }
     
-    /*
+    /**
     * Returns name of country
     * @return name of country
      */
     public String getName() { return name; }
 
-    /*
+    /**
     * Returns the game field
     * @return game reference
      */
     public Game getGame() { return game; }
 
-    /*
+    /**
     * Sets the game field
     * @param game   Game reference to set field to
      */
     public void setGame(Game game) { this.game = game; }
 
-    /*
+    /**
     * Adds a new city to the country
     * @param city  City to add
      */
@@ -49,8 +49,8 @@ public class Country {
         network.put(city, new TreeSet<>());
     }
 
-    /*
-    * Adds roads between two cities
+    /**
+    * Adds road between two cities
      */
     public void addRoads(City a, City b, int length) {
         if(length > 0 && !a.equals(b)) {
@@ -62,7 +62,7 @@ public class Country {
             }
         }
     }
-    /*
+    /**
     * Returns the position of the city
     * @param city   City to get the position for
      */
@@ -70,7 +70,7 @@ public class Country {
         return new Position(city, city, 0);
     }
 
-    /*
+    /**
     * Returns position object with travel info to next town
     * @param from   City to travel from
     * @param to     City to travel to
@@ -78,8 +78,11 @@ public class Country {
     public Position readyToTravel(City from, City to) {
         Road travelRoad = null;
         if(network.containsKey(from)) {
+            // Gets the roads to and from the starting city
             for(Road road : network.get(from)) {
+                // Checks if each road's end city is equals to the ending city we want
                 if(road.getTo().equals(to)) {
+                    // Saves the found road
                     travelRoad = road;
                     break;
                 }
@@ -90,16 +93,17 @@ public class Country {
         if(travelRoad == null || from.equals(to)) {
             return position(from);
         }
+        // Returns a new road with the saved road's length
         return new Position(from, to, travelRoad.getLength());
     }
 
-    /*
+    /**
      * Returns Set of cities in road network
      * @return Set of cities
      */
     public Set<City> getCities() { return network.keySet(); }
 
-    /*
+    /**
     * Searches network for certain city
     * @param name   City name to find
     * @return city if found else null
@@ -113,9 +117,9 @@ public class Country {
         return null;
     }
 
-    /*
+    /**
     * Returns road network of certain city
-    * @param city   City's road network to get
+    * @param c   City's road network to get
     * @return Set of roads if found else empty TreeMap
     */
     public Set<Road> getRoads(City c) {
@@ -125,7 +129,7 @@ public class Country {
         return new TreeSet<>();
     }
 
-    /*
+    /**
     * Resets the road network
      */
     public void reset() {
@@ -134,6 +138,11 @@ public class Country {
         }
     }
 
+    /**
+     * Calculates random bonus in range from 0 to value
+     * @param value Int value of city
+     * @return      Int the calculated bonus
+     */
     public int bonus(int value) {
         if(value > 0) {
             Random rand = game.getRandom();
@@ -142,7 +151,7 @@ public class Country {
         return 0;
     }
 
-    /*
+    /**
      * Creates a String representation of country
      * @return String model of object
      */
@@ -151,7 +160,7 @@ public class Country {
         return name;
     }
 
-    /*
+    /**
      * Generate hash code based on name field and prime number
      * @return generated int hash code
      */
@@ -160,7 +169,7 @@ public class Country {
         return name.hashCode() * 31;
     }
 
-    /*
+    /**
      * Check if Object is equal to this based on name field
      * @param obj    Object to check if equal to
      * @return true if objects are equal
