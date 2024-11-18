@@ -17,8 +17,8 @@ public class City implements Comparable<City> {
 
     /**
     * Creates a new city
-    * @param name   The name of the city
-    * @param value  The initial value of the city
+    * @param name    The name of the city
+    * @param value   The initial value of the city
     * @param country The country to create the city in
      */
     public City(String name, int value, Country country) {

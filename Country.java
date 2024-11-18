@@ -82,25 +82,21 @@ public class Country {
      * @return Position object
      */
     public Position readyToTravel(City from, City to) {
-        Road travelRoad = null;
+        if(from.equals(to)) {
+            return position(from);
+        }
         if(network.containsKey(from)) {
             // Gets the roads to and from the starting city
             for(Road road : network.get(from)) {
                 // Checks if each road's end city is equals to the ending city we want
                 if(road.getTo().equals(to)) {
-                    // Saves the found road
-                    travelRoad = road;
-                    break;
+                    // Returns a new road with the road's length
+                    return new Position(from, to, road.getLength());
                 }
             }
-        } else {
-            return position(from);
         }
-        if(travelRoad == null || from.equals(to)) {
-            return position(from);
-        }
-        // Returns a new road with the saved road's length
-        return new Position(from, to, travelRoad.getLength());
+
+        return position(from);
     }
 
     /**
