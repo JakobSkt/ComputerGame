@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 import java.util.*;
 
 /**
- * This class tests the Country class and its methods
+ * This class tests the Road class and its methods
  * 
  * @author  Jakob Skøt Nielsen 202407223
  * @author  Daniel Dupont 202407440
@@ -20,7 +20,7 @@ public class CountryTest
 
     /**
      * Sets up the test fixture that is used on every test case
-    */
+     */
     @BeforeEach
     public void setUp()
     {
@@ -66,19 +66,19 @@ public class CountryTest
         country2.addRoads(cityF, cityD, 3);
         country2.addRoads(cityF, cityG, 6);
     }
-    
+
     @Test
     public void constructor() {
         // Check that the name field is initialized correct
         assertEquals("Country 1", country1.getName());
     }
-    
+
     @Test
     public void getCities() {
         // Check that the correct amount of cities are in the network
         assertEquals(4, country1.getCities().size());
     }
-    
+
     @Test
     public void getCity() {
         // Check that the correct city is returned by the string
@@ -87,39 +87,39 @@ public class CountryTest
         assertEquals(cityC, country1.getCity("City C"));
         assertEquals(cityD, country1.getCity("City D"));
     }
-    
+
     @Test
     public void getCityNotInCountry() {
         // Check that null is returned when the city is not in the country
         assertNull(country1.getCity("City E"));
     }
-    
+
     @Test
     public void getRoads() {
         // Check that the correct amount of roads are found in the cityA's road set
         Set<Road> roads = country1.getRoads(cityA);
         assertEquals(3, roads.size());
     }
-    
+
     @Test
     public void getRoadsCityNotInCountry() {
         // Checks that an empty set is returned if city is not in country
         assertEquals(new TreeSet<>(), country1.getRoads(cityF));
     }
-    
+
     @Test
     public void reset() {
         cityA.arrive(); cityA.arrive(); cityA.arrive();
         cityE.arrive(); cityE.arrive(); cityE.arrive();
         // Saving the value of city E
         int valueE = cityE.getValue();
-        
+
         // Check that City A gets reset but not city E
-        country1.reset(); country1.reset(); country1.reset();
+        country1.reset();  country1.reset();  country1.reset();
         assertEquals(cityA.getInitialValue(), cityA.getValue());
         assertEquals(valueE, cityE.getValue());
     }
-    
+
     @Test
     public void bonus() {
         for(int seed = 0; seed < 100; seed++) {
@@ -133,35 +133,35 @@ public class CountryTest
                 // Initialize bonus and add to sum for normal use
                 int bonus = country1.bonus(80);
                 sum += bonus;
-                
+
                 // Initialize bonus and add to sum for value 1
                 int bonus1 = country1.bonus(1);
                 sum1 += bonus1;
-                
+
                 // Initialize bonus and add to sum for value 0
                 int bonus0 = country1.bonus(0);
                 sum0 += bonus0;
-                
+
                 bonuses.add(bonus);
                 assertTrue(bonus >= 0 && bonus <= 80);
             }
             // Check that the average of bonus(1) is correct
             int average1 = 100000/2;
             assertTrue(average1 * 0.99 <= sum1 && sum1 <= average1 * 1.01);
-            
+
             // Check that average is 0, since the bonus(0) returns 0
             int average0 = 0;
             assertTrue(average0 * 0.99 <= sum0 && sum0 <= average0 * 1.01);
-            
+
             // Check that average value is within 1% of 40 
             int average = 100000 * (80/2);
             assertTrue(average * 0.99 <= sum && sum <= average * 1.01);
-            
+
             // Check that all the possible values are in the set
             assertEquals(80 + 1, bonuses.size());
         }
     }
-    
+
     @Test
     public void addCity() {
         // Check to find non-existing city
@@ -175,14 +175,13 @@ public class CountryTest
         assertEquals(cityJ, country1.getCity("City J"));
         // Check that size of network is changing -> now 5
         assertEquals(5, country1.getCities().size());
-        
-        // Check that city in country2 can be added
+
         country1.addCity(cityE);
         assertEquals(cityE, country1.getCity("City E"));
-        // Check that size of network is changing -> now 6
         assertEquals(6, country1.getCities().size());
+
     }
-    
+
     @Test
     public void addRoads() {
         // Saving number of roads for comparison
@@ -190,19 +189,18 @@ public class CountryTest
         int noOfRoadsD = country1.getRoads(cityD).size();
         country1.addRoads(cityA, cityD, 10);
         // Both cities in same country -> road is created both ways
-        // Check that noOfRoads in cityA's and cityD's set has changed by one
+        // Check that noOfRoads in cityA's and cityD's set has changed
         assertEquals(noOfRoadsA + 1, country1.getRoads(cityA).size());
         assertEquals(noOfRoadsD + 1, country1.getRoads(cityD).size());
-        
-        // Trying same cities with new road length 
-        country1.addRoads(cityA, cityD, 12);
-        // Check that noOfRoads in cityA's and cityD's set has changed by two
+
+        // adds a city with diffrent length and but since all the criteria is not equals it adds road
+        country1.addRoads(cityA, cityD, 4);
         assertEquals(noOfRoadsA + 2, country1.getRoads(cityA).size());
         assertEquals(noOfRoadsD + 2, country1.getRoads(cityD).size());
     }
-    
+
     @Test
-    public void addRoadsToFromSameCity() {
+    public void addRoads2() {
         // Check with same to and from city
         // Saving number of roads for comparison
         int noOfRoads = country1.getRoads(cityA).size();
@@ -210,9 +208,9 @@ public class CountryTest
         // Check that noOfRoads in cityA's set has not changed
         assertEquals(noOfRoads, country1.getRoads(cityA).size());
     }
-    
+
     @Test
-    public void addRoadsDistanceZero() {
+    public void addRoads3() {
         // Check with distance 0
         // Saving number of roads for comparison
         int noOfRoads = country1.getRoads(cityA).size();
@@ -220,7 +218,7 @@ public class CountryTest
         // Check that noOfRoads in cityA's set has not changed
         assertEquals(noOfRoads, country1.getRoads(cityA).size());
     }
-    
+
     @Test
     public void addRoads4() {
         // Check with negative distance
@@ -230,45 +228,41 @@ public class CountryTest
         // Check that noOfRoads in cityA's set has not changed
         assertEquals(noOfRoads, country1.getRoads(cityA).size());
     }
-    
+
     @Test
-    public void addRoadsCitiesDifferentCountries() {
-        // Check with cities in different countries
+    public void addRoads5() {
         // Saving number of roads for comparison
         int noOfRoadsA = country1.getRoads(cityA).size();
         int noOfRoadsE = country2.getRoads(cityE).size();
-        country1.addRoads(cityA, cityE, 10);
-        // Both cities not in same country -> road is created one way
-        // Check that noOfRoads in cityA's set has changed by one
+        country1.addRoads(cityA, cityE, 20);
+
+        // Both cities in same country -> road is created both ways
+        // Check that noOfRoads in cityA's and cityD's set has changed
         assertEquals(noOfRoadsA + 1, country1.getRoads(cityA).size());
-        // Check that noOfRoads in cityE's set has not changed
         assertEquals(noOfRoadsE, country2.getRoads(cityE).size());
-        
-        // Other way around
+
         int noOfRoadsB = country1.getRoads(cityB).size();
         int noOfRoadsF = country2.getRoads(cityF).size();
-        country2.addRoads(cityF, cityB, 10);
-        // Both cities not in same country -> road is created one way
-        // Check that noOfRoads in cityF's set has changed by one
-        assertEquals(noOfRoadsF + 1, country2.getRoads(cityF).size());
-        // Check that noOfRoads in cityB's set has not changed
+        country2.addRoads(cityF, cityB, 20);
+
         assertEquals(noOfRoadsB, country1.getRoads(cityB).size());
+        assertEquals(noOfRoadsF + 1, country2.getRoads(cityF).size());
+
     }
-    
+
     @Test
-    public void addRoadsNoCitiesInCountry() {
-        // Check with no cities in country
+    public void addRoads6() {
         // Saving number of roads for comparison
-        int noOfRoadsF = country2.getRoads(cityF).size();
+        int noOfRoadsA = country1.getRoads(cityA).size();
         int noOfRoadsE = country2.getRoads(cityE).size();
-        country1.addRoads(cityF, cityE, 10);
-        // No cities in country -> no roads created
-        // Check that noOfRoads in both cities sets has not changed
-        assertEquals(noOfRoadsF, country2.getRoads(cityF).size());
+        country1.addRoads(cityF, cityG, 20);
+
+        // checks if neither of the cities are in the country
+        assertEquals(noOfRoadsA, country1.getRoads(cityA).size());
         assertEquals(noOfRoadsE, country2.getRoads(cityE).size());
+
     }
-    
-    
+
     @Test
     public void position() {
         assertEquals(new Position(cityA, cityA, 0), country1.position(cityA));
@@ -278,7 +272,7 @@ public class CountryTest
         // Check that the position object has a distance of 0
         assertNotEquals(new Position(cityC, cityB, 4), country1.position(cityC));
     }
-    
+
     @Test
     public void readyToTravel() {
         // Check that position is correct with
@@ -287,21 +281,21 @@ public class CountryTest
         // * road to destination is found
         assertEquals(new Position(cityA, cityB, 4), country1.readyToTravel(cityA, cityB));
     }
-    
+
     @Test
     public void readyToTravelWrongObject() {
         // Road is found, but wrong object is checked
         // Return position object of from city
         assertNotEquals(new Position(cityF, cityB, 0), country1.readyToTravel(cityF, cityE));
     }
-    
+
     @Test
     public void readyToTravelSameFromTo() {
         // If to and from cities are equal
         // return position object of from city
         assertEquals(country1.position(cityA), country1.readyToTravel(cityA, cityA));
     }
-    
+
     @Test
     public void readyToTravelSameWrongDistance() {
         // Check that distance is returned correctly
@@ -314,7 +308,7 @@ public class CountryTest
         // Return position object of from city
         assertEquals(country1.position(cityA), country1.readyToTravel(cityA, cityE));
     }
-    
+
     @Test
     public void testToString() {
         assertEquals("Country 1", country1.toString());

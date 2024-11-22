@@ -1,33 +1,26 @@
+import java.util.*;
 /**
- * This class models a MafiaCountry
- * 
- * @author  Jakob Skøt Nielsen 202407223
- * @author  Daniel Dupont 202407440
- * @version november 2024
+ * Write a description of class MafiaCountry here.
+ *
+ * @author (your name)
+ * @version (a version number or a date)
  */
-
-public class MafiaCountry extends Country {
-
+public class MafiaCountry extends Country
+{
     /**
-     * Creates a Country
-     *
-     * @param name Country name
+     * Constructor for objects of class MafiaCountry
      */
-    public MafiaCountry(String name) {
+    public MafiaCountry(String name)
+    {
         super(name);
     }
 
-    /**
-     * Calculates the bonus for the player, the chance for getting robbed and the given loss
-     */
     @Override
-    public int bonus(int value) {
-        // Calculate random number between 0 and 100
-        int randomValue = getGame().getRandom().nextInt(100 + 1);
-        // Get risk of robbery from game
-        int robberyRisk = getGame().getSettings().getRisk();
-        // If the risk of robbery is lower than the random number, enter the statement
-        if(robberyRisk <= randomValue) {
+    public int bonus(int value){
+        //get to risk of robbery in percent
+        int rand = getGame().getRandom().nextInt(100 + 1);
+        int risk = getGame(). getSettings().getRisk();
+        if(risk <= rand){
             return super.bonus(value);
         }
         return -getGame().getLoss();

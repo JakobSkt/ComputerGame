@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 import java.util.*;
 
 /**
- * This class tests the City class and its methods
+ * This class tests the Road class and its methods
  * 
  * @author  Jakob Skøt Nielsen 202407223
  * @author  Daniel Dupont 202407440
@@ -76,16 +76,16 @@ public class CityTest
     }
     
     @Test 
-    public void changeValueZero() {
-        // Testing changing by value 0
-        cityA.reset();
-        cityA.changeValue(0); cityA.changeValue(0); cityA.changeValue(0);
-        assertEquals(80, cityA.getValue());
+    public void changeValueZeroValue() {
+        // Testing changing to a negative city value
+        cityB.reset();
+        cityB.changeValue(0); cityB.changeValue(0); cityB.changeValue(0);
+        assertEquals(60, cityB.getValue());
     }
     
     @Test 
-    public void changeValueCityValueZero() {
-        // Testing changing to a city value of 0
+    public void changeValueZeroCity() {
+        // Testing changing to a negative city value
         cityB.reset();
         cityB.changeValue(-20); cityB.changeValue(-20); cityB.changeValue(-20);
         assertEquals(0, cityB.getValue());
@@ -138,6 +138,7 @@ public class CityTest
     
     @Test
     public void arriveBonusNegative() {
+        
         // Testing with negative bonuses
         for(int seed = 0; seed < 1000; seed++) {
             game.getRandom().setSeed(seed);

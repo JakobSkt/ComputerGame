@@ -1,141 +1,138 @@
+
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
 import java.util.*;
 
 /**
- * This class tests the MafiaCountry class and its methods
- * 
- * @author  Jakob Skøt Nielsen 202407223
- * @author  Daniel Dupont 202407440
- * @version november 2024
+ * The test class MafiaCountryTest.
+ *
+ * @author  (your name)
+ * @version (a version number or a date)
  */
 public class MafiaCountryTest
 {
     private Game game;
-    private MafiaCountry country1;
+    private Country country1, country2;
+
     /**
-     * Sets up the test fixture that is used on every test case
-    */
+     * Default constructor for test class MafiaCountryTest
+     */
+    public MafiaCountryTest()
+    {
+    }
+
+    /**
+     * Sets up the test fixture.
+     *
+     * Called before every test case method.
+     */
     @BeforeEach
     public void setUp()
     {
-        // Create countries
-        country1 = new MafiaCountry("Sverige");
-
-        // Create game objects
         game = new Game(0);
+
+        country1 = new Country("Country 1");
+        country2 = new MafiaCountry("Country 2");
         country1.setGame(game);
+        country2.setGame(game);
     }
-    
+
     @Test
-    public void constructor() {
-        // Check that the name field is initialized correct
-        assertEquals("Sverige", country1.getName());
-    }
-    
-    @Test
-    public void bonus() {
-        for(int seed = 0; seed < 1000; seed++) {
+    public void testBonus(){
+        for(int seed = 0; seed < 1000; seed++){
             game.getRandom().setSeed(seed);
+            float loss = 0;
             int robs = 0;
-            int loss = 0;
             Set<Integer> values = new HashSet<>();
             Set<Integer> bonuses = new HashSet<>();
 
-            for(int i = 0; i < 10000; i++) {
-                // Initialize bonus and add to sum for normal use
-                int bonus = country1.bonus(80);
-                if(bonus < 0) { // Robbery occurred
+            for(int i = 0; i < 10000; i++){
+                int bonus = country2.bonus(80); 
+                if(bonus < 0){
                     robs++;
-                    assertTrue(bonus >= -50 && bonus <= -10);
+                    assertTrue(bonus <= -10 && bonus >= -50);
                     loss -= bonus;
                     values.add(bonus);
-                } else { // No robbery occurred
+                }
+                else{
                     bonuses.add(bonus);
-                    // When entered, the bonus is always at least 0 -> just checking upper case
-                    assertTrue(bonus <= 80);
+                    assertTrue(bonus <= 80 && bonus >= 0);
                 }
             }
-            // Calculating percentage of times robbed
-            double robsPercentage = ( (double) robs/10000.0) * 100.0;
-            // Calculate average loss
-            double lossAverage = loss/robs;
-            assertTrue(robsPercentage >= 20.0 * 0.9 && robsPercentage <= 20.0  * 1.1);
-            assertTrue(lossAverage >= 30.0 * 0.9 && lossAverage <= 30.0 * 1.1);
+            double percentRobs = ((double)robs / 10000.0) * 100.0;
+            double averageLoss = loss / robs;
+            assertTrue(percentRobs * 1.1 >= 20.0 && percentRobs * 0.9 <= 20.0);
+            assertTrue(averageLoss <= 30.0 * 1.1 && averageLoss >= 30.0 * 0.9);
+
             assertEquals(41, values.size());
             assertEquals(81, bonuses.size());
+
         }
     }
+    
     @Test
-    public void bonusZero() {
-        for(int seed = 0; seed < 100; seed++) {
+    public void testBonusZero(){
+        for(int seed = 0; seed < 1000; seed++){
             game.getRandom().setSeed(seed);
+            float loss = 0;
             int robs = 0;
-            int loss = 0;
             Set<Integer> values = new HashSet<>();
             Set<Integer> bonuses = new HashSet<>();
 
-            for(int i = 0; i < 10000; i++) {
-                // Initialize bonus and add to sum for normal use
-                int bonus = country1.bonus(0);
-                if(bonus < 0) { // Robbery occurred
+            for(int i = 0; i < 10000; i++){
+                int bonus = country2.bonus(0); //will always retun 0
+                if(bonus < 0){
                     robs++;
-                    assertTrue(bonus >= -50 && bonus <= -10);
+                    assertTrue(bonus <= -10 && bonus >= -50);
                     loss -= bonus;
-                    values.add(-bonus);
-                } else { // No robbery occurred
+                    values.add(bonus);
+                }
+                else{
                     bonuses.add(bonus);
-                    // When entered, the bonus is always over 0 -> just checking upper case
-                    assertTrue(bonus <= 80);
                 }
             }
-            // Calculating percentage of times robbed
-            double robsPercentage = (robs/10000.0) * 100.0;
-            // Calculate average loss
-            double lossAverage = loss/robs;
-            assertTrue(robsPercentage >= 20.0 * 0.9 && robsPercentage <= 20.0  * 1.1);
-            assertTrue(lossAverage >= 30.0 * 0.9 && lossAverage <= 30.0 * 1.1);
+            double percentRobs = ((double)robs / 10000.0) * 100.0;
+            double averageLoss = loss / robs;
+            assertTrue(percentRobs * 1.1 >= 20.0 && percentRobs * 0.9 <= 20.0);
+            assertTrue(averageLoss <= 30.0 * 1.1 && averageLoss >= 30.0 * 0.9);
+
             assertEquals(41, values.size());
-            // Only one value in set since it take a random number between zero and zero
             assertEquals(1, bonuses.size());
+
         }
     }
-
+    
     @Test
-    public void bonusNegative() {
-        for(int seed = 0; seed < 100; seed++) {
+    public void testBonusNegative(){
+        for(int seed = 0; seed < 1000; seed++){
             game.getRandom().setSeed(seed);
+            float loss = 0;
             int robs = 0;
-            int loss = 0;
             Set<Integer> values = new HashSet<>();
             Set<Integer> bonuses = new HashSet<>();
 
-            for(int i = 0; i < 10000; i++) {
-                // Initialize bonus and add to sum for normal use
-                int bonus = country1.bonus(-80);
-                if(bonus < 0) { // Robbery occurred
+            for(int i = 0; i < 10000; i++){
+                int bonus = country2.bonus(-80);//Will always return 0
+                if(bonus < 0){
                     robs++;
-                    assertTrue(bonus >= -50 && bonus <= -10);
+                    assertTrue(bonus <= -10 && bonus >= -50);
                     loss -= bonus;
-                    values.add(-bonus);
-                } else { // No robbery occurred
+                    values.add(bonus);
+                }
+                else{
                     bonuses.add(bonus);
-                    // When entered, the bonus is always over 0 -> just checking upper case
-                    assertTrue(bonus <= 80);
                 }
             }
-            // Calculating percentage of times robbed
-            double robsPercentage = (robs/10000.0) * 100.0;
-            // Calculate average loss
-            double lossAverage = loss/robs;
-            assertTrue(robsPercentage >= 20.0 * 0.9 && robsPercentage <= 20.0  * 1.1);
-            assertTrue(lossAverage >= 30.0 * 0.9 && lossAverage <= 30.0 * 1.1);
+            double percentRobs = ((double)robs / 10000.0) * 100.0;
+            double averageLoss = loss / robs;
+            assertTrue(percentRobs * 1.1 >= 20.0 && percentRobs * 0.9 <= 20.0);
+            assertTrue(averageLoss <= 30.0 * 1.1 && averageLoss >= 30.0 * 0.9);
+
             assertEquals(41, values.size());
-            // Only one value since every bonus will be 0
             assertEquals(1, bonuses.size());
+
         }
     }
 }

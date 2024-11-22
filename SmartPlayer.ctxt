@@ -1,17 +1,17 @@
 #BlueJ class context
 comment0.target=SmartPlayer
-comment0.text=\n\ Models\ a\ smart\ player\ which\ uses\ a\ depth-first\ search\ to\ determine\ the\ optimal\ path.\n\ @author\ Nikolaj\ Ignatieff\ Schwartzbach.\ \n\ @version\ August\ 2019.\n
+comment0.text=\r\n\ Models\ a\ smart\ player\ which\ uses\ a\ depth-first\ search\ to\ determine\ the\ optimal\ path.\r\n\ @author\ Nikolaj\ Ignatieff\ Schwartzbach.\ \r\n\ @version\ August\ 2019.\r\n
 comment1.params=pos
 comment1.target=SmartPlayer(Position)
-comment1.text=\n\ Creates\ a\ new\ SmartPlayer\ with\ the\ specified\ position.\n\ @param\ pos\ \ \ Position\ of\ this\ player.\n
+comment1.text=\r\n\ Creates\ a\ new\ SmartPlayer\ with\ the\ specified\ position.\r\n\ @param\ pos\ \ \ Position\ of\ this\ player.\r\n
 comment2.params=
 comment2.target=boolean\ step()
 comment3.params=c\ n
 comment3.target=City\ maximizeValue(City,\ int)
-comment3.text=\n\ Determine\ the\ next\ city\ to\ travel\ to.\n\ Calculates\ the\ 'maxDepth'-steps\ optimal\ route\ (DFS)\ and\ returns\n\ the\ next\ city\ of\ the\ path.\n\ @param\ c\ The\ current\ city.\n\ @param\ n\ The\ number\ of\ steps\ to\ look\ forward\ (is\ capped\ at\ 'maxDepth').\n
+comment3.text=\r\n\ Determine\ the\ next\ city\ to\ travel\ to.\r\n\ Calculates\ the\ 'maxDepth'-steps\ optimal\ route\ (DFS)\ and\ returns\r\n\ the\ next\ city\ of\ the\ path.\r\n\ @param\ c\ The\ current\ city.\r\n\ @param\ n\ The\ number\ of\ steps\ to\ look\ forward\ (is\ capped\ at\ 'maxDepth').\r\n
 comment4.params=visits\ c\ i
 comment4.target=PlayerPath\ maximizeValue(java.util.HashMap,\ City,\ int)
-comment4.text=\n\ Determine\ the\ next\ city\ to\ travel\ to.\n\ Calculates\ the\ 'maxDepth'-steps\ optimal\ route\ (DFS)\ and\ returns\n\ the\ next\ city\ of\ the\ path.\n\ @param\ visits\ \ \ \ The\ number\ of\ times\ each\ city\ has\ been\ visited.\n\ @param\ c\ \ \ \ \ \ \ \ \ The\ current\ city.\n\ @param\ i\ \ \ \ \ \ \ \ \ The\ number\ of\ steps\ to\ look\ forward\ (is\ capped\ at\ 'maxDepth').\n
+comment4.text=\r\n\ Determine\ the\ next\ city\ to\ travel\ to.\r\n\ Calculates\ the\ 'maxDepth'-steps\ optimal\ route\ (DFS)\ and\ returns\r\n\ the\ next\ city\ of\ the\ path.\r\n\ @param\ visits\ \ \ \ The\ number\ of\ times\ each\ city\ has\ been\ visited.\r\n\ @param\ c\ \ \ \ \ \ \ \ \ The\ current\ city.\r\n\ @param\ i\ \ \ \ \ \ \ \ \ The\ number\ of\ steps\ to\ look\ forward\ (is\ capped\ at\ 'maxDepth').\r\n
 comment5.params=
 comment5.target=java.lang.String\ getName()
 comment6.params=
