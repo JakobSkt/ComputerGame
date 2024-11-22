@@ -70,6 +70,15 @@ public class City implements Comparable<City> {
     }
 
     /**
+     * Arrive method for overriding in subclasses. Is to be ignored here
+     * @param p player object
+     * @return  regular arrive method
+     */
+    public int arrive(Player p) {
+        return arrive();
+    }
+
+    /**
     * Reset city's value to initial value
      */
     public void reset() {
