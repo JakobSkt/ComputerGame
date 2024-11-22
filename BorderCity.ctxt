@@ -1,0 +1,8 @@
+#BlueJ class context
+comment0.target=BorderCity
+comment0.text=\n\ This\ class\ models\ the\ BorderCity\ class\ and\ its\ methods\n\ \n\ @author\ \ Jakob\ Sk\u00F8t\ Nielsen\ 202407223\n\ @author\ \ Daniel\ Dupont\ 202407440\n\ @version\ november\ 2024\n
+comment1.params=name\ value\ country
+comment1.target=BorderCity(java.lang.String,\ int,\ Country)
+comment2.params=p
+comment2.target=int\ arrive(Player)
+numComments=3

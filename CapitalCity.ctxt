@@ -1,0 +1,9 @@
+#BlueJ class context
+comment0.target=CapitalCity
+comment0.text=\n\ This\ class\ tests\ the\ CapitalCity\ class\ and\ its\ methods\n\ \n\ @author\ \ Jakob\ Sk\u00F8t\ Nielsen\ 202407223\n\ @author\ \ Daniel\ Dupont\ 202407440\n\ @version\ november\ 2024\n
+comment1.params=name\ value\ country
+comment1.target=CapitalCity(java.lang.String,\ int,\ Country)
+comment2.params=p
+comment2.target=int\ arrive(Player)
+comment2.text=\n\ Arrives\ at\ the\ city\ and\ calculates\ the\ bonus,\ customs\ and\ consumption\n\ @param\ p\ player\ object\n\ @return\ bonus\ after\ subtracting\ customs\ and\ consumption\n
+numComments=3

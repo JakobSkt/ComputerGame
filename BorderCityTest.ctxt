@@ -1,0 +1,17 @@
+#BlueJ class context
+comment0.target=BorderCityTest
+comment0.text=\n\ This\ class\ tests\ the\ BorderCity\ class\ and\ its\ methods\n\ \n\ @author\ \ Jakob\ Sk\u00F8t\ Nielsen\ 202407223\n\ @author\ \ Daniel\ Dupont\ 202407440\n\ @version\ november\ 2024\n
+comment1.params=
+comment1.target=void\ setUp()
+comment1.text=\n\ Sets\ up\ the\ test\ fixture\ that\ is\ used\ on\ every\ test\ case\n
+comment2.params=
+comment2.target=void\ constructor()
+comment3.params=
+comment3.target=void\ arriveFromAnotherCountry()
+comment4.params=
+comment4.target=void\ arriveFromSameCountry()
+comment5.params=
+comment5.target=void\ arriveBonus0()
+comment6.params=
+comment6.target=void\ arriveBonusNegative()
+numComments=7
