@@ -5,7 +5,7 @@ import java.util.*;
  * Countries consists of a name and a road network between cities
  * @author Jakob Skøt Nielsen 202407223
  * @author Daniel Dupont 202407440
- * @version 06-11-2024
+ * @version november 2024
  *
  */
 

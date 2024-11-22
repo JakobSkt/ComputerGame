@@ -1,8 +1,9 @@
 #BlueJ class context
 comment0.target=BorderCity
-comment0.text=\n\ This\ class\ models\ the\ BorderCity\ class\ and\ its\ methods\n\ \n\ @author\ \ Jakob\ Sk\u00F8t\ Nielsen\ 202407223\n\ @author\ \ Daniel\ Dupont\ 202407440\n\ @version\ november\ 2024\n
+comment0.text=\n\ Write\ a\ description\ of\ class\ BorderCity\ here.\n\n\ @author\ (your\ name)\n\ @version\ (a\ version\ number\ or\ a\ date)\n
 comment1.params=name\ value\ country
 comment1.target=BorderCity(java.lang.String,\ int,\ Country)
+comment1.text=\n\ Constructor\ for\ objects\ of\ class\ BorderCity\n
 comment2.params=p
 comment2.target=int\ arrive(Player)
 numComments=3

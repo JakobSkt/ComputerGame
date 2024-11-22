@@ -20,7 +20,9 @@ import javax.swing.filechooser.FileNameExtensionFilter;
  * Keyboard controls and <space> to turnAround.
  * 
  * @author Nikolaj Ignatieff Schwartzbach
- * @version 1.1.1
+ * @author Jakob Skøt Nielsen 202407223
+ * @author Daniel Dupont 202407440
+ * @version 1.1.0
  *
  */
 public class GUI {
@@ -42,10 +44,13 @@ public class GUI {
     private JCheckBox random, greedy, smart;
     
     /** Textfields */
-    private JTextField tollSizeTextField, robberyTextField;
+    private JTextField tollSizeTextField, robberyTextField, minLossTextField, maxLossTextField;
     
     /** Buttons */
-    private JButton optionsButton, newGameButton, pauseResumeButton, abortButton;
+    private JButton optionsButton, newGameButton, pauseResumeButton, abortButton, playLogButton, saveLogButton;
+
+    /** Pause/Resume item */
+    private JMenuItem pauseResumeItem;
     
     /** Reference to the Game instance */
     private Game game;
@@ -100,7 +105,6 @@ public class GUI {
         panel = new WorldPanel(game);
         panel.setPreferredSize(new Dimension(WIDTH, HEIGHT));
         
-        
         //Handle mouse click events in the inner window
         panel.addMouseListener(new MouseAdapter() {
             @Override
@@ -112,7 +116,7 @@ public class GUI {
                         Point p = game.getPosition(c);
                         double dist = Math.hypot(p.getX() - e.getX(), p.getY() - e.getY());
                         if(dist < WorldPanel.MIN_CIRCLE_RADIUS + 5){
-                            game.clickCity(c);
+                            clickCity(c);
                         }
                     }
                 }
@@ -213,7 +217,13 @@ public class GUI {
 
         //Apply existing settings to current game
         applyExistingSettings();
-                
+
+        //Initialize MenuBar
+        createMenuBar();
+    }
+    
+    private void clickCity(City c) {
+        game.clickCity(c);
     }
     
     /**
@@ -240,8 +250,10 @@ public class GUI {
         
             //Text-fields
             tollSizeTextField.setText(""+game.getSettings().getTollToBePaid());
-            robberyTextField.setText(""+game.getSettings().getRisk());    
-        
+            robberyTextField.setText(""+game.getSettings().getRisk());
+            minLossTextField.setText(""+game.getSettings().getMinRobbery());
+            maxLossTextField.setText(""+game.getSettings().getMaxRobbery());
+
             //Game speed
             speed = game.getSettings().getGameSpeed();
             setSpeed(speed);
@@ -300,9 +312,14 @@ public class GUI {
                 if(paused){
                     timer.stop();
                     pauseResumeButton.setText("Resume game");
+                    // Updating menu bar item text
+                    pauseResumeItem.setText("Resume game");
+
                 } else {
                     timer.start();
                     pauseResumeButton.setText("Pause game");
+                    // Updating menu bar item text
+                    pauseResumeItem.setText("Pause game");
                 }
         });
     }
@@ -339,7 +356,7 @@ public class GUI {
                     }
                 }
                 if(best != null && bestAngle < Math.PI/4){
-                    game.clickCity(best);
+                    clickCity(best);
                 }
                 
                 currentDirection = -1;
@@ -371,7 +388,7 @@ public class GUI {
     public JPanel createButtonPanel(){
         //Initialize the JPanel, using a GridLayout
         JPanel buttons = new JPanel();
-        buttons.setLayout(new GridLayout(1,4));                                  
+        buttons.setLayout(new GridLayout(2,3));
         
         //Instantiate the 'New'-button
         newGameButton = new JButton("New game");
@@ -399,7 +416,17 @@ public class GUI {
         optionsButton = new JButton("Options...");
         optionsButton.setEnabled(false);
         optionsButton.addActionListener(e -> showOptions());
-        buttons.add(optionsButton); 
+        buttons.add(optionsButton);
+
+        //Add the 'Play log...'-button
+        playLogButton = new JButton("Play log...");
+        playLogButton.addActionListener(e -> testPlayButton());
+        buttons.add(playLogButton);
+
+        //Add the 'Save log...'-button
+        saveLogButton = new JButton("Save log...");
+        saveLogButton.addActionListener(e -> testSaveButton());
+        buttons.add(saveLogButton);
         
         //Return the JPanel
         return buttons;
@@ -415,24 +442,38 @@ public class GUI {
         game.getSettings().setActive(1, greedy.isSelected());
         game.getSettings().setActive(2, smart.isSelected());
         
-        //Toll size & robbery
-        int tollSize, riskRob = 0;
+        //Make sure alle the variables are correctly initialized
+        int tollSize, riskRob, minLoss, maxLoss = 0;
+        // Initialize StringBuilder
+        StringBuilder sbError = new StringBuilder();
+
         try{
             tollSize = Integer.parseInt(tollSizeTextField.getText());
             riskRob  = Integer.parseInt(robberyTextField.getText());
+            minLoss = Integer.parseInt(minLossTextField.getText());
+            maxLoss = Integer.parseInt(maxLossTextField.getText());
             if(tollSize < 0 || riskRob < 0 || tollSize > 50 || riskRob > 50){
-                JOptionPane.showMessageDialog(mainFrame, "'Toll size' and 'Risk rob' must be between 0 and 50.", "Malformed input", JOptionPane.ERROR_MESSAGE);
-                return;
+                sbError.append("'Toll size' and 'Risk rob' must be between 0 and 50."  + '\n');
+            }
+            if(minLoss < 0 || maxLoss < 0 || minLoss > 100 || maxLoss > 100){
+                sbError.append("'Min. loss when robbed' and 'Max. loss when robbed' must be between 0 and 100." + '\n');
+            }
+            if(minLoss > maxLoss) {
+                sbError.append("'Min. loss' can't be higher than 'Max loss'");
             }
         } catch (NumberFormatException e){
-            JOptionPane.showMessageDialog(mainFrame, "'Toll size' and 'Risk rob' must be integers.", "Malformed input", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(mainFrame, "'Toll size', 'Risk rob', 'Min. loss when robbed' and 'Max. loss when robbed' must be integers.", "Malformed input", JOptionPane.ERROR_MESSAGE);
             return;
         }
-        
+        if(!sbError.isEmpty()) {
+            JOptionPane.showMessageDialog(mainFrame, sbError, "Malformed input", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
         game.getSettings().setRisk(riskRob);
         game.getSettings().setTollToBePaid(tollSize);
-       
-        
+        game.getSettings().setMinMaxRobbery(minLoss, maxLoss);
+
         mainFrame.setVisible(false);
         mainFrame.setVisible(true);
         mainFrame.repaint();
@@ -508,7 +549,7 @@ public class GUI {
         
         //Text input
         JPanel tollAndRobberyPanel = new JPanel();
-        tollAndRobberyPanel.setLayout(new GridLayout(2,3,5,5));                     
+        tollAndRobberyPanel.setLayout(new GridLayout(4,3,5,5));
         
         //Toll size
         JLabel tollSizeLabel = new JLabel("Toll to be paid:");
@@ -529,8 +570,28 @@ public class GUI {
 
         JLabel percrobbery = new JLabel("% in [0,50]");
         tollAndRobberyPanel.add(percrobbery);
-        
-        
+
+        //Min rob loss
+        JLabel minRobberyLoss = new JLabel("Min. loss when robbed:");
+        tollAndRobberyPanel.add(minRobberyLoss);
+
+        minLossTextField = new JTextField("10", 10);
+        tollAndRobberyPanel.add(minLossTextField);
+
+        JLabel minLossEuro = new JLabel("€ in [0,100]");
+        tollAndRobberyPanel.add(minLossEuro);
+
+        //Max rob loss
+        JLabel maxRobberyLoss = new JLabel("Max. loss when robbed:");
+        tollAndRobberyPanel.add(maxRobberyLoss);
+
+        maxLossTextField = new JTextField("50", 10);
+        tollAndRobberyPanel.add(maxLossTextField);
+
+        JLabel maxLossEuro = new JLabel("€ in [0,100]");
+        tollAndRobberyPanel.add(maxLossEuro);
+
+
         //Speed options
         JPanel speedPanel = new JPanel();
         speedPanel.setLayout(new FlowLayout());
@@ -612,6 +673,88 @@ public class GUI {
         
         return frame;
     }
+
+    /**
+     * Creates menu bar
+     * The menu bar contains a "game" menu and a "log" menu with further subitems
+     */
+    private void createMenuBar() {
+        //Create menu bar
+        JMenuBar menuBar = new JMenuBar();
+
+        // Creating game menu
+        JMenu gameMenu = new JMenu("Game");
+        menuBar.add(gameMenu);
+
+        // Initialize game menu items and set up event handlers
+        JMenuItem newGameItem = new JMenuItem("New game");
+        newGameItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N, CTRL_SHIFT ));
+        newGameItem.addActionListener(e -> newGameButton.doClick());
+
+        pauseResumeItem = new JMenuItem("Pause game");
+        pauseResumeItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_P, CTRL_SHIFT ));
+        pauseResumeItem.addActionListener(e -> pauseResumeButton.doClick());
+
+        JMenuItem abortGameItem = new JMenuItem("Abort game");
+        abortGameItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_A, CTRL_SHIFT ));
+        abortGameItem.addActionListener(e -> abortButton.doClick());
+
+        JMenuItem optionsItem = new JMenuItem("Options...");
+        optionsItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_O, CTRL_SHIFT ));
+        optionsItem.addActionListener(e -> optionsButton.doClick());
+
+        JMenu setSpeedItem = new JMenu("Set speed");
+
+        // Adding menu items to game menu
+        gameMenu.add(newGameItem);
+        gameMenu.add(pauseResumeItem);
+        gameMenu.add(abortGameItem);
+        gameMenu.add(optionsItem);
+        gameMenu.add(setSpeedItem);
+
+        // Nested speed menu with events
+        JMenuItem slowItem = new JMenuItem("Slow");
+        slowItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_1, CTRL ));
+        slowItem.addActionListener(e -> setSpeed(1));
+
+        JMenuItem mediumItem = new JMenuItem("Medium");
+        mediumItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_2, CTRL ));
+        mediumItem.addActionListener(e -> setSpeed(2));
+
+        JMenuItem fastItem = new JMenuItem("Fast");
+        fastItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_3, CTRL ));
+        fastItem.addActionListener(e -> setSpeed(3));
+
+        JMenuItem sonicItem = new JMenuItem("Sonic");
+        sonicItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_4, CTRL ));
+        sonicItem.addActionListener(e -> setSpeed(4));
+
+        // Adding speed items to speed menu
+        setSpeedItem.add(slowItem);
+        setSpeedItem.add(mediumItem);
+        setSpeedItem.add(fastItem);
+        setSpeedItem.add(sonicItem);
+
+        // Log Menu
+        JMenu logMenu = new JMenu("Log");
+        menuBar.add(logMenu);
+
+        // Initialize log menu items and set up event handlers
+        JMenuItem playItem = new JMenuItem("Play log...");
+        playItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_L, CTRL_SHIFT ));
+        playItem.addActionListener(e -> playLogButton.doClick());
+
+        JMenuItem saveItem = new JMenuItem("Save log...");
+        saveItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, CTRL_SHIFT ));
+        saveItem.addActionListener(e -> saveLogButton.doClick());
+
+        // Adding log items to log menu
+        logMenu.add(playItem);
+        logMenu.add(saveItem);
+
+        // Add menuBar to mainFrame
+        mainFrame.setJMenuBar(menuBar);
+    }
     
     /**
      * Tests the Save button.
@@ -659,6 +802,7 @@ public class GUI {
         g.startGUI();
     }
 }
+
 /**
  * This class models the JPanel upon which the graphics are actually drawn.
  * This class handles the "nitty gritty" details of drawing all the roads, player icons etc.
@@ -715,6 +859,7 @@ class WorldPanel extends JPanel {
         for(Player p : game.getPlayers()){
             String name = p.getClass().getName();
             try{
+                playerIcons.put("LogPlayer", ImageIO.read(new File("guiplayer.png")));
                 playerIcons.put(name, ImageIO.read(new File(name.toLowerCase()+".png")));
             } catch (IOException e) {
                 e.printStackTrace();
@@ -725,6 +870,27 @@ class WorldPanel extends JPanel {
             this.img = ImageIO.read(new File("map.png"));
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    private class ImageLabel extends JLabel{
+        private Image _myimage;
+
+        public ImageLabel(String text){
+            super(text);
+        }
+
+        public void setIcon(Icon icon) {
+            super.setIcon(icon);
+            if (icon instanceof ImageIcon)
+            {
+                _myimage = ((ImageIcon) icon).getImage();
+            }
+        }
+
+        @Override
+        public void paint(Graphics g){
+            g.drawImage(_myimage, 0, 0, this.getWidth(), this.getHeight(), null);
         }
     }
 
@@ -808,7 +974,12 @@ class WorldPanel extends JPanel {
         // City info
         if(GUI.hover != null) {
             g2d.setFont(FONT_SC);
-            g2d.drawString(GUI.hover.getCountry().getName().toUpperCase(), 350, 470);
+            if(GUI.hover.getClass() == CapitalCity.class) {
+                g2d.drawString("Capital of "+GUI.hover.getCountry().getName().toUpperCase(), 350, 470);
+            }
+            else {
+                g2d.drawString(GUI.hover.getCountry().getName().toUpperCase(), 350, 470);
+            }
             g2d.setFont(FONT_BODY);
             g2d.drawString(GUI.hover.getValue()+" €", 350, 486);
             g2d.setFont(FONT_HEADER);
@@ -840,8 +1011,6 @@ class WorldPanel extends JPanel {
             drawPlayer(g2d, player, true);
         }
 
-        // Draw test objects
-        //drawTests(g2d);
     }
 
     /**
@@ -869,41 +1038,6 @@ class WorldPanel extends JPanel {
 
         for(int i=0; i<r.getLength(); i++)
             drawRoadDot(g2d, r, i);
-    }
-    
-    private void drawTests(Graphics2D g2d) {
-        int radius = MIN_CIRCLE_RADIUS;
-        Ellipse2D.Double shape = null;
-        
-        shape = new Ellipse2D.Double(0-radius,0-radius, 2*radius, 2*radius);
-        g2d.setColor(Color.BLACK);
-        g2d.fill(shape);
-        g2d.setColor(COLOR_CITY_STROKE);
-        g2d.draw(shape);
-        
-        shape = new Ellipse2D.Double(500-radius,0-radius, 2*radius, 2*radius);
-        g2d.setColor(Color.BLACK);
-        g2d.fill(shape);
-        g2d.setColor(COLOR_CITY_STROKE);
-        g2d.draw(shape);
-        
-        shape = new Ellipse2D.Double(0-radius,635-radius, 2*radius, 2*radius);
-        g2d.setColor(Color.BLACK);
-        g2d.fill(shape);
-        g2d.setColor(COLOR_CITY_STROKE);
-        g2d.draw(shape);
-        
-        shape = new Ellipse2D.Double(500-radius,635-radius, 2*radius, 2*radius);
-        g2d.setColor(Color.BLACK);
-        g2d.fill(shape);
-        g2d.setColor(COLOR_CITY_STROKE);
-        g2d.draw(shape);
-        
-        shape = new Ellipse2D.Double(382,396, 2*radius, 2*radius);
-        g2d.setColor(Color.BLACK);
-        g2d.fill(shape);
-        g2d.setColor(COLOR_CITY_STROKE);
-        g2d.draw(shape);
     }
 
     /**
@@ -1013,6 +1147,7 @@ class WorldPanel extends JPanel {
         int radius = MIN_CIRCLE_RADIUS;
 
         if(c.equals(GUI.hover)) { radius = radius + 2; }
+        if(c.getClass() == CapitalCity.class) { radius = radius + 3; }
 
         Ellipse2D.Double shape = new Ellipse2D.Double(pos.x - radius, pos.y - radius, 2*radius, 2*radius);
         double val = Math.pow(c.getValue() / 250.0, 1.0);

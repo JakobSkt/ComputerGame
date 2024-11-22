@@ -1,22 +1,22 @@
 #BlueJ class context
 comment0.target=GUIPlayer
-comment0.text=\r\n\ Write\ a\ description\ of\ class\ GUIPlayer\ here.\r\n\r\n\ @author\ (your\ name)\r\n\ @version\ (a\ version\ number\ or\ a\ date)\r\n
+comment0.text=\n\ Write\ a\ description\ of\ class\ GUIPlayer\ here.\n\n\ @author\ (your\ name)\n\ @version\ (a\ version\ number\ or\ a\ date)\n
 comment1.params=pos\ money
 comment1.target=GUIPlayer(Position,\ int)
-comment1.text=\r\n\ Instantiates\ a\ new\ GUI\ Player\ with\ a\ given\ position\ and\ money.\r\n
+comment1.text=\n\ Instantiates\ a\ new\ GUI\ Player\ with\ a\ given\ position\ and\ money.\n
 comment2.params=pos
 comment2.target=GUIPlayer(Position)
-comment2.text=\r\n\ Instantiates\ a\ new\ GUI\ Player\ with\ a\ given\ position.\r\n
+comment2.text=\n\ Instantiates\ a\ new\ GUI\ Player\ with\ a\ given\ position.\n
 comment3.params=
 comment3.target=java.awt.Color\ getColor()
 comment4.params=
 comment4.target=java.lang.String\ getName()
 comment5.params=city
 comment5.target=void\ enqueueCity(City)
-comment5.text=\r\n\ Adds\ a\ City\ to\ a\ queue\ of\ pending\ cities\ (which\ the\ player\ will\ attempt\ to\ travel\ to\ after\ finishing\ the\ current\ road).\r\n\ This\ makes\ the\ design\ more\ reponsive\ to\ the\ choices\ made\ by\ the\ user.\r\n\ @param\ city\ \ \ City\ to\ be\ added\ as\ pending.\r\n
+comment5.text=\n\ Adds\ a\ City\ to\ a\ queue\ of\ pending\ cities\ (which\ the\ player\ will\ attempt\ to\ travel\ to\ after\ finishing\ the\ current\ road).\n\ This\ makes\ the\ design\ more\ reponsive\ to\ the\ choices\ made\ by\ the\ user.\n\ @param\ city\ \ \ City\ to\ be\ added\ as\ pending.\n
 comment6.params=city
 comment6.target=void\ travelTo(City)
-comment6.text=\r\n\ Attemps\ to\ travel\ to\ the\ given\ city.\r\n\ A\ player\ can\ only\ travel\ towards\ the\ specified\ city\ if\ there\ is\ a\ direct\ Road\ and\ the\ Player\ is\ not\ already\r\n\ travelling\ (in\ which\ case\ the\ City\ is\ placed\ as\ 'pending').\r\n\ Can\ also\ turn\ around\ the\ current\ position,\ if\ the\ 'from'\ City\ is\ parsed\ as\ argument.\ \r\n\ @param\ city\ \ \ City\ to\ attempt\ to\ travel\ to.\r\n
+comment6.text=\n\ Attemps\ to\ travel\ to\ the\ given\ city.\n\ A\ player\ can\ only\ travel\ towards\ the\ specified\ city\ if\ there\ is\ a\ direct\ Road\ and\ the\ Player\ is\ not\ already\n\ travelling\ (in\ which\ case\ the\ City\ is\ placed\ as\ 'pending').\n\ Can\ also\ turn\ around\ the\ current\ position,\ if\ the\ 'from'\ City\ is\ parsed\ as\ argument.\ \n\ @param\ city\ \ \ City\ to\ attempt\ to\ travel\ to.\n
 comment7.params=
 comment7.target=boolean\ step()
 numComments=8
