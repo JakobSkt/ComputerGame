@@ -1,9 +1,9 @@
 #BlueJ class context
 comment0.target=PositionTest
-comment0.text=\n\ This\ class\ tests\ the\ Road\ class\ and\ its\ methods\n\ \n\ @author\ \ Jakob\ Sk\u00F8t\ Nielsen\ 202407223\n\ @author\ \ Daniel\ Dupont\ 202407440\n\ @version\ november\ 2024\n
+comment0.text=\r\n\ This\ class\ tests\ the\ Road\ class\ and\ its\ methods\r\n\ \r\n\ @author\ \ Jakob\ Sk\u00F8t\ Nielsen\ 202407223\r\n\ @author\ \ Daniel\ Dupont\ 202407440\r\n\ @version\ november\ 2024\r\n
 comment1.params=
 comment1.target=void\ setUp()
-comment1.text=\n\ Sets\ up\ the\ test\ fixture\ that\ is\ used\ on\ every\ test\ case\n
+comment1.text=\r\n\ Sets\ up\ the\ test\ fixture\ that\ is\ used\ on\ every\ test\ case\r\n
 comment2.params=
 comment2.target=void\ constructor()
 comment3.params=

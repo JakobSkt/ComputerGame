@@ -1,0 +1,9 @@
+#BlueJ class context
+comment0.target=CapitalCity
+comment0.text=\r\n\ Write\ a\ description\ of\ class\ CapitalCity\ here.\r\n\r\n\ @author\ (your\ name)\r\n\ @version\ (a\ version\ number\ or\ a\ date)\r\n
+comment1.params=name\ value\ country
+comment1.target=CapitalCity(java.lang.String,\ int,\ Country)
+comment1.text=\r\n\ Constructor\ for\ objects\ of\ class\ BorderCity\r\n
+comment2.params=p
+comment2.target=int\ arrive(Player)
+numComments=3

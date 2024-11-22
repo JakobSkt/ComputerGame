@@ -1,9 +1,9 @@
 #BlueJ class context
 comment0.target=GreedyPlayer
-comment0.text=\n\ Models\ a\ player\ which\ greedily\ chooses\ the\ next\ city\ to\ travel\ to\ (looking\ only\ one\ city\ ahead).\n\ @author\ Nikolaj\ Ignatieff\ Schwartzbach.\ \n\ @version\ August\ 2019.\n
+comment0.text=\r\n\ Models\ a\ player\ which\ greedily\ chooses\ the\ next\ city\ to\ travel\ to\ (looking\ only\ one\ city\ ahead).\r\n\ @author\ Nikolaj\ Ignatieff\ Schwartzbach.\ \r\n\ @version\ August\ 2019.\r\n
 comment1.params=pos
 comment1.target=GreedyPlayer(Position)
-comment1.text=\n\ Creates\ a\ new\ GreedyPlayer\ with\ the\ specified\ position.\n\ @param\ pos\ \ \ Position\ of\ this\ player.\n
+comment1.text=\r\n\ Creates\ a\ new\ GreedyPlayer\ with\ the\ specified\ position.\r\n\ @param\ pos\ \ \ Position\ of\ this\ player.\r\n
 comment2.params=
 comment2.target=boolean\ step()
 comment3.params=

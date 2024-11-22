@@ -15,42 +15,42 @@ public class Country {
     private Game game; // Game reference
 
     /**
-    * Creates a Country 
-    * @param name Country name
+     * Creates a Country 
+     * @param name Country name
      */
     public Country(String name) {
         this.name = name;
         network = new TreeMap<>(); // Initiate empty TreeMap
     }
-    
+
     /**
-    * Returns name of country
-    * @return name of country
+     * Returns name of country
+     * @return name of country
      */
     public String getName() { return name; }
 
     /**
-    * Returns the game field
-    * @return game reference
+     * Returns the game field
+     * @return game reference
      */
     public Game getGame() { return game; }
 
     /**
-    * Sets the game field
-    * @param game Game reference to set field to
+     * Sets the game field
+     * @param game Game reference to set field to
      */
     public void setGame(Game game) { this.game = game; }
 
     /**
-    * Adds a new city to the country
-    * @param city  City to add
+     * Adds a new city to the country
+     * @param city  City to add
      */
     public void addCity(City city) {
         network.put(city, new TreeSet<>());
     }
 
     /**
-    * Adds road between two cities
+     * Adds road between two cities
      * @param a The city to start the road in
      * @param b The city to end the road in
      * @param length The length of the road
@@ -66,9 +66,10 @@ public class Country {
             }
         }
     }
+
     /**
-    * Returns the position of the city with a length of 0
-    * @param city City to get the position for
+     * Returns the position of the city with a length of 0
+     * @param city City to get the position for
      * @return Position The position of the player in the given city
      */
     public Position position(City city) {
@@ -76,9 +77,9 @@ public class Country {
     }
 
     /**
-    * Returns position object with travel info to next town
-    * @param from City to travel from
-    * @param to City to travel to
+     * Returns position object with travel info to next town
+     * @param from City to travel from
+     * @param to City to travel to
      * @return Position object
      */
     public Position readyToTravel(City from, City to) {
@@ -106,9 +107,9 @@ public class Country {
     public Set<City> getCities() { return network.keySet(); }
 
     /**
-    * Searches network for certain city
-    * @param name City name to find
-    * @return city if found else null
+     * Searches network for certain city
+     * @param name City name to find
+     * @return city if found else null
      */
     public City getCity(String name) {
         for (City city : network.keySet()) {
@@ -120,10 +121,10 @@ public class Country {
     }
 
     /**
-    * Returns road network of certain city
-    * @param c City's road network to get
-    * @return Set of roads if found else empty TreeMap
-    */
+     * Returns road network of certain city
+     * @param c City's road network to get
+     * @return Set of roads if found else empty TreeMap
+     */
     public Set<Road> getRoads(City c) {
         if(network.containsKey(c)) {
             return network.get(c);
@@ -132,7 +133,7 @@ public class Country {
     }
 
     /**
-    * Resets the road network
+     * Resets the road network
      */
     public void reset() {
         for(City city : network.keySet()) {

@@ -1,11 +1,11 @@
 /**
-* Models a city
+ * Models a city
  * Cities contain a name and a value and can be visited by the player
  * @author Jakob Skøt Nielsen 202407223
-* @author Daniel Dupont 202407440
-* @version 06-11-2024
-*
-*/
+ * @author Daniel Dupont 202407440
+ * @version 06-11-2024
+ *
+ */
 
 import java.util.*;
 
@@ -16,10 +16,10 @@ public class City implements Comparable<City> {
     private Country country; // The country the city is in
 
     /**
-    * Creates a new city
-    * @param name    The name of the city
-    * @param value   The initial value of the city
-    * @param country The country to create the city in
+     * Creates a new city
+     * @param name    The name of the city
+     * @param value   The initial value of the city
+     * @param country The country to create the city in
      */
     public City(String name, int value, Country country) {
         this.name = name;
@@ -27,9 +27,10 @@ public class City implements Comparable<City> {
         this.initialValue = value;
         this.country = country;
     }
+
     /**
-    * Returns the city name
-    * @return city name
+     * Returns the city name
+     * @return city name
      */
     public String getName() { return name; }
 
@@ -46,8 +47,8 @@ public class City implements Comparable<City> {
     public int getInitialValue() { return initialValue; }
 
     /**
-    * Returns the country the city is placed in
-    * @return country the city is placed in
+     * Returns the country the city is placed in
+     * @return country the city is placed in
      */
     public Country getCountry() { return country; }
 
@@ -60,8 +61,8 @@ public class City implements Comparable<City> {
     }
 
     /**
-    * Get bonus and withdraw from city value
-    * @return withdrew bonus
+     * Get bonus and withdraw from city value
+     * @return withdrew bonus
      */
     public int arrive() {
         int bonus = country.bonus(value);
@@ -69,16 +70,20 @@ public class City implements Comparable<City> {
         return bonus;
     }
 
+    public int arrive(Player p){
+        return arrive();
+    }
+
     /**
-    * Reset city's value to initial value
+     * Reset city's value to initial value
      */
     public void reset() {
         value = initialValue;
     }
 
     /**
-    * Returns the city's fields in String form
-    * @return name followed by the value in parentheses
+     * Returns the city's fields in String form
+     * @return name followed by the value in parentheses
      */
     @Override
     public String toString() {
@@ -86,9 +91,9 @@ public class City implements Comparable<City> {
     }
 
     /**
-    * Compares cities based on name, alphabetically
-    * @param other  Other city object to compare to
-    * @return int based on comparing name field
+     * Compares cities based on name, alphabetically
+     * @param other  Other city object to compare to
+     * @return int based on comparing name field
      */
     @Override
     public int compareTo(City other) {
@@ -96,19 +101,19 @@ public class City implements Comparable<City> {
     }
 
     /**
-    * Generate hash code based on name field, country field and prime numbers
-    * @return generated int hash code
+     * Generate hash code based on name field, country field and prime numbers
+     * @return generated int hash code
      */
     @Override
     public int hashCode() {
         return name.hashCode() * 31 +
-                country.hashCode() * 13;
+        country.hashCode() * 13;
     }
 
     /**
-    * Check if Object is equal to this based on name and country fields
-    * @param obj    Object to check if equal to
-    * @return true if objects are equal
+     * Check if Object is equal to this based on name and country fields
+     * @param obj    Object to check if equal to
+     * @return true if objects are equal
      */
     @Override
     public boolean equals(Object obj) {

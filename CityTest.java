@@ -75,6 +75,22 @@ public class CityTest
         assertEquals(-60, cityB.getValue());
     }
     
+    @Test 
+    public void changeValueZeroValue() {
+        // Testing changing to a negative city value
+        cityB.reset();
+        cityB.changeValue(0); cityB.changeValue(0); cityB.changeValue(0);
+        assertEquals(60, cityB.getValue());
+    }
+    
+    @Test 
+    public void changeValueZeroCity() {
+        // Testing changing to a negative city value
+        cityB.reset();
+        cityB.changeValue(-20); cityB.changeValue(-20); cityB.changeValue(-20);
+        assertEquals(0, cityB.getValue());
+    }
+    
     @Test
     public void resetByArrive() {
         // Testing with arrive method
