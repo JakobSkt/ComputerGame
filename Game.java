@@ -59,7 +59,6 @@ public class Game {
         } catch(IOException|SettingsException e) {
             settings = new Settings();
         }
-        
     }
 
     /**
@@ -95,8 +94,10 @@ public class Game {
                 switch(args[0].toLowerCase()) {
                     case "background": break;
                     case "game": game = new Game(Integer.parseInt(args[1])); break;
-                    case "country": game.addCountry(new Country(args[1])); country = args[1]; break;
-                    case "city": game.addCity(args[1], Integer.parseInt(args[2]), country); break;
+                    case "country": game.addCountry(args.length > 2 && args[2].equals("mafia") ? new MafiaCountry(args[1]) : new Country(args[1])); country = args[1]; break;
+                    case "city": 
+                        String lbl = args.length > 3 ? args[3] : "";
+                        game.addCity(args[1], Integer.parseInt(args[2]), country, lbl); break;
                     case "road": game.addRoads(args[1], args[2], Integer.parseInt(args[3])); break;
                     case "position": game.putPosition(game.getCity(args[1].trim()),
                         new Point(Integer.parseInt(args[2]), Integer.parseInt(args[3]))); break;
@@ -192,10 +193,20 @@ public class Game {
      * @param value   The initial value of the city.
      * @param contry  The name of the country.
      */    
-    public void addCity(String name, int value, String country) {
+    public void addCity(String name, int value, String country, String lbl) {
         for(Country c : countries) {
             if(c.getName().equals(country.trim())) {
-                c.addCity(new City(name, value, c));
+                switch(lbl){
+                    case "capital":
+                        c.addCity(new CapitalCity(name, value, c));
+                        break;
+                    case "border":
+                        c.addCity(new BorderCity(name, value, c));
+                        break;
+                    default:
+                        c.addCity(new City(name, value, c));
+                        break;
+                }
                 return;
             }
         }
@@ -214,7 +225,7 @@ public class Game {
         for(Country c : countries) {
             c.reset();
         }
-
+        
         Collections.sort(players);
         for(Player p : players) {
             p.setMoney(0);

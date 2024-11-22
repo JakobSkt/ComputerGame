@@ -5,10 +5,11 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 /**
- * The test class BorderCityTest.
+ * This class tests the BorderCity class
  *
- * @author  (your name)
- * @version (a version number or a date)
+ * @author  Jakob Skøt Nielsen 202407223
+ * @author  Daniel Dupont 202407440
+ * @version november 2024
  */
 public class BorderCityTest
 {
@@ -16,13 +17,6 @@ public class BorderCityTest
     private Country country1, country2;
     private City cityA, cityC;
     private BorderCity cityB, cityD, cityE;
-
-    /**
-     * Default constructor for test class BorderCityTest
-     */
-    public BorderCityTest()
-    {
-    }
 
     /**
      * Sets up the test fixture.
@@ -45,18 +39,7 @@ public class BorderCityTest
         cityB = new BorderCity("City B", 0, country1);
         cityC = new City("City C", 80, country2);
         cityD = new BorderCity("City D", 60, country2);
-        cityE = new BorderCity("City E", -100, country2); 
-
-    }
-
-    /**
-     * Tears down the test fixture.
-     *
-     * Called after every test case method.
-     */
-    @AfterEach
-    public void tearDown()
-    {
+        cityE = new BorderCity("City E", -100, country2);
     }
 
     @Test

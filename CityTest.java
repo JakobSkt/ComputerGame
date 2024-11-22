@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 import java.util.*;
 
 /**
- * This class tests the Road class and its methods
+ * This class tests the City class and its methods
  * 
  * @author  Jakob Skøt Nielsen 202407223
  * @author  Daniel Dupont 202407440
@@ -16,7 +16,8 @@ public class CityTest
 {
     private Game game;
     private Country country1;
-    private City cityA, cityB;
+    private MafiaCountry country2;
+    private City cityA, cityB, cityC;
 
     /**
      * Sets up the test fixture that is used on every test case
@@ -30,10 +31,14 @@ public class CityTest
         // Create countries
         country1 = new Country("Country 1");
         country1.setGame(game);
+
+        country2 = new MafiaCountry("Sverige");
+        country2.setGame(game);
         
         // Create cities
         cityA = new City("City A", 80, country1);
         cityB = new City("City B", 60, country1);
+        cityC = new City("City C", 40, country2);
     }
     
     @Test
@@ -48,6 +53,11 @@ public class CityTest
         assertEquals(60, cityB.getValue());
         assertEquals(60, cityB.getInitialValue());
         assertEquals(country1, cityB.getCountry());
+
+        assertEquals("City C", cityC.getName());
+        assertEquals(40, cityC.getValue());
+        assertEquals(40, cityC.getInitialValue());
+        assertEquals(country2, cityC.getCountry());
     }
     
     @Test
@@ -122,14 +132,15 @@ public class CityTest
     }
     
     @Test
-    public void arriveBonus0() {
+    public void arriveBonusZero() {
         // Testing with a bonus of 0
         for(int seed = 0; seed < 1000; seed++) {
             game.getRandom().setSeed(seed);
+            int bonus = country1.bonus(0);
             // Setting city value to 0
             cityA.changeValue(-cityA.getValue());
-            // Check that bonus is 0
-            assertEquals(0, cityA.arrive());
+            game.getRandom().setSeed(seed);
+            assertEquals(bonus, cityA.arrive());
             // Check that city value is not changing
             assertEquals(0, cityA.getValue());
             cityA.reset();
@@ -138,17 +149,40 @@ public class CityTest
     
     @Test
     public void arriveBonusNegative() {
-        
         // Testing with negative bonuses
         for(int seed = 0; seed < 1000; seed++) {
             game.getRandom().setSeed(seed);
+            int bonus = country1.bonus(-60);
             // Setting city value to -60
             cityB.changeValue(-cityB.getValue()*2);
             // Check that bonus is 0
-            assertEquals(0, cityB.arrive());
+            assertEquals(bonus, cityB.arrive());
             // Check that city value is not changing
             assertEquals(-60, cityB.getValue());
             cityB.reset();
+        }
+    }
+
+    @Test
+    public void arriveMafia() {
+        for(int seed = 0; seed < 1000; seed++) {
+            game.getRandom().setSeed(seed);
+            int bonus = country2.bonus(40); // City C's value
+            game.getRandom().setSeed(seed);
+
+            if(bonus > 0 ) {
+                // Check that with the same seed, the bonus is the same
+                assertEquals(bonus, cityC.arrive());
+                // Check that city value is decreasing
+                assertEquals(cityC.getInitialValue() - bonus, cityC.getValue());
+                cityC.reset();
+            } else {
+                // Check that with the same seed, the bonus is the same
+                assertEquals(bonus, cityC.arrive());
+                // Check that city value is not changing
+                assertEquals(cityC.getInitialValue(), cityC.getValue());
+                cityC.reset();
+            }
         }
     }
     

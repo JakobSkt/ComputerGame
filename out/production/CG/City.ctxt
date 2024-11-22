@@ -35,7 +35,6 @@ comment7.target=int\ arrive()
 comment7.text=\n\ Get\ bonus\ and\ withdraw\ from\ city\ value\n\ @return\ withdrew\ bonus\n
 comment8.params=p
 comment8.target=int\ arrive(Player)
-comment8.text=\n\ Arrive\ method\ for\ overriding\ in\ subclasses.\ Is\ to\ be\ ignored\ here\n\ @param\ p\ player\ object\n\ @return\ \ regular\ arrive\ method\n
 comment9.params=
 comment9.target=void\ reset()
 comment9.text=\n\ Reset\ city's\ value\ to\ initial\ value\n

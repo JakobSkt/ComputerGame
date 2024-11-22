@@ -7,10 +7,11 @@ import org.junit.jupiter.api.Test;
 import java.util.*;
 
 /**
- * The test class CapitalCityTest.
+ * This class tests the CapitalCity class and its methods
+ * @author Jakob Skøt Nielsen 202407223
+ * @author Daniel Dupont 202407440
+ * @version november 2024
  *
- * @author  (your name)
- * @version (a version number or a date)
  */
 public class CapitalCityTest
 {
@@ -18,13 +19,6 @@ public class CapitalCityTest
     private Country country1, country2;
     private City cityA, cityC;
     private CapitalCity cityB, cityD, cityE;
-
-    /**
-     * Default constructor for test class CapitalCityTest
-     */
-    public CapitalCityTest()
-    {
-    }
 
     /**
      * Sets up the test fixture.
@@ -52,7 +46,7 @@ public class CapitalCityTest
     }
 
     @Test
-    public void testConstructor(){
+    public void constructor(){
         assertEquals("City B", cityB.getName());
         assertEquals("City D", cityD.getName());
         assertEquals("City E", cityE.getName());
@@ -68,7 +62,7 @@ public class CapitalCityTest
     }
 
     @Test
-    public void ArriveFromAnotherCountry(){
+    public void arriveFromAnotherCountry(){
         for(int seed = 0; seed < 100000; seed++) {
             game.getRandom().setSeed(seed); // Reset seed
             Player player = new GUIPlayer(new Position(cityA, cityD, 0), 250);
@@ -86,7 +80,7 @@ public class CapitalCityTest
     }
 
     @Test
-    public void ArriveFromSameCountry(){
+    public void arriveFromSameCountry(){
         for(int seed = 0; seed < 100000; seed++) {
             game.getRandom().setSeed(seed); // Reset seed
             Player player = new GUIPlayer(new Position(cityC, cityD, 0), 250);

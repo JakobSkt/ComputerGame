@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 import java.util.*;
 
 /**
- * This class tests the Road class and its methods
+ * This class tests the Country class and its methods
  * 
  * @author  Jakob Skøt Nielsen 202407223
  * @author  Daniel Dupont 202407440

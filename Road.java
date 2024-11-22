@@ -3,7 +3,7 @@
  * Roads connect two cities in one direction with a distance
  * @author Jakob Skøt Nielsen 202407223
  * @author Daniel Dupont 202407440
- * @version 06-11-2024
+ * @version november 2024
  *
 */
 
