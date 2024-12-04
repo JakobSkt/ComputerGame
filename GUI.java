@@ -452,11 +452,17 @@ public class GUI {
             riskRob  = Integer.parseInt(robberyTextField.getText());
             minLoss = Integer.parseInt(minLossTextField.getText());
             maxLoss = Integer.parseInt(maxLossTextField.getText());
-            if(tollSize < 0 || riskRob < 0 || tollSize > 50 || riskRob > 50){
-                sbError.append("'Toll size' and 'Risk rob' must be between 0 and 50."  + '\n');
+            if(tollSize < 0 || tollSize > 50){
+                sbError.append("'Toll size' "  + '\n');
             }
-            if(minLoss < 0 || maxLoss < 0 || minLoss > 100 || maxLoss > 100){
-                sbError.append("'Min. loss when robbed' and 'Max. loss when robbed' must be between 0 and 100." + '\n');
+            if(riskRob < 0 || riskRob > 50){
+                sbError.append("'Risk rob' must be between 0 and 50."  + '\n');
+            }
+            if(minLoss < 0 || minLoss > 100){
+                sbError.append("'Min. loss when robbed' must be between 0 and 100." + '\n');
+            }
+            if(maxLoss < 0 || maxLoss > 100){
+                sbError.append("'Max. loss when robbed' must be between 0 and 100." + '\n');
             }
             if(minLoss > maxLoss) {
                 sbError.append("'Min. loss' can't be higher than 'Max loss'");
